@@ -4,5 +4,6 @@
 /*.da
 /flisp
 /llt/*.o
+/llt/*.do
 /llt/*.a
 /flisp.boot.bak
