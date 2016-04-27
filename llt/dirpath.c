@@ -119,15 +119,13 @@ char *get_exename(char *buf, size_t size)
     return buf;
 }
 #elif defined(MACOSX)
-#include <ApplicationServices/ApplicationServices.h>
+#include <mach-o/dyld.h>
+
 char *get_exename(char *buf, size_t size)
 {
-    ProcessSerialNumber PSN;
-    FSRef ref;
+    uint32_t bufsize = size;
 
-    if (GetCurrentProcess(&PSN) < 0 ||
-        GetProcessBundleLocation(&PSN, &ref) < 0 ||
-        FSRefMakePath(&ref, buf, size) < 0)
+    if (_NSGetExecutablePath(buf, &bufsize) < 0)
         return NULL;
 
     return buf;
